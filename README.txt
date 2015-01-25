@@ -1,3 +1,24 @@
+mcufriend module
+ili9341 
+s6d0154
+ili9327
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+------------------------------------------------------------------------------
 This is a library for the Adafruit 2.8" TFT display.
 This library works with the Adafruit 2.8" TFT Breakout w/SD card
   ----> http://www.adafruit.com/products/335
