@@ -392,8 +392,6 @@ void Adafruit_TFTLCD::begin(uint16_t id) {
    writeRegister16(0x07,0x0017);/*  Display Control  DISPLAY ON */
    
    setAddrWindow(0, 0, TFTWIDTH-1, TFTHEIGHT-1);
-   return;
-	  
   } else {
     driver = ID_UNKNOWN;
     return;
@@ -496,7 +494,7 @@ void Adafruit_TFTLCD::setAddrWindow(int x1, int y1, int x2, int y2) {
     t = x1;
     t <<= 16;
     t |= x2;
-    writeRegister32(ILI9341_COLADDRSET, t);  // HX8357D uses same registers! SC(x1)からEC(x2)までのアドレスセット
+    writeRegister32(ILI9341_COLADDRSET, t);  // HX8357D uses same registers! 
     t = y1;
     t <<= 16;
     t |= y2;
@@ -546,8 +544,7 @@ void Adafruit_TFTLCD::setAddrWindow(int x1, int y1, int x2, int y2) {
 	writeRegister16(0x20, x); //GRAM Address Set
 	writeRegister16(0x21, y);
 	writeRegister8(0x22, 0);  
-
-		
+	
   }
   CS_IDLE;
 }
@@ -743,7 +740,7 @@ void Adafruit_TFTLCD::drawPixel(int16_t x, int16_t y, uint16_t color) {
   if((x < 0) || (y < 0) || (x >= _width) || (y >= _height)) return;
 
   CS_ACTIVE;
-  if(driver == ID_932X || ID_S6D0154) {
+  if((driver == ID_932X) || (driver == ID_S6D0154)) {
     int16_t t;
     switch(rotation) {
      case 1:
@@ -837,7 +834,7 @@ void Adafruit_TFTLCD::setRotation(uint8_t x) {
   // Then perform hardware-specific rotation operations...
 
   CS_ACTIVE;
-  if(driver == ID_932X || ID_S6D0154) {
+  if((driver == ID_932X) || (driver == ID_S6D0154)) {
 
     uint16_t t;
     switch(rotation) {
@@ -951,7 +948,7 @@ uint16_t Adafruit_TFTLCD::readPixel(int16_t x, int16_t y) {
   if((x < 0) || (y < 0) || (x >= _width) || (y >= _height)) return 0;
 
   CS_ACTIVE;
-  if(driver == ID_932X || ID_S6D0154) {
+  if((driver == ID_932X) || (driver ==ID_S6D0154)) {
 
     uint8_t hi, lo;
     int16_t t;
