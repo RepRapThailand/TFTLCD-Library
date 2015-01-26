@@ -250,6 +250,32 @@ static const uint16_t ILI932x_regValues[] PROGMEM = {
   ILI932X_DISP_CTRL1       , 0x0133, // Main screen turn on
 };
 
+static const uint8_t ILI9341_regValues[] PROGMEM = {
+	HX8357_SWRESET, 0,
+	0xCB, 5, 0x39, 0x2C, 0x00, 0x34, 0x02,
+	0xCF, 3, 0x00, 0xC1, 0x30,
+	0xE8, 3, 0x85, 0x00, 0x78,
+	0xEA, 2, 0x00, 0x00,
+	0xED, 4, 0x64, 0x03, 0x12, 0x81,
+	0xF7, 1, 0x20,
+	0xC0, 1, 0x23,
+	0xC1, 1, 0x10,
+	0xC5, 2, 0x3E, 0x28,
+	0xC7, 1, 0x86,
+	0x36, 1, 0x48,
+	0x3A, 1, 0x55,
+	0xB1, 2, 0x00, 0x18,
+	0xB6, 3, 0x08, 0x82, 0x27,
+	0xF2, 1, 0x00,
+	0x26, 1, 0x01,
+	0xE0,15, 0x0f,0x31,0x2b,0x0c,0x0e,0x08,0x4e,0xf1,0x37,0x07,0x10,0x03,0x0e,0x09,0x00,
+	0xE1,15, 0x00,0x0e,0x14,0x03,0x11,0x07,0x31,0xC1,0x48,0x08,0x0f,0x0c,0x31,0x36,0x0f,
+	0x11, 0,
+	TFTLCD_DELAY, 150,
+	0x29, 0,
+	0x2C, 0,
+};
+
 void Adafruit_TFTLCD::begin(uint16_t id) {
   uint8_t i = 0;
 
@@ -272,7 +298,9 @@ void Adafruit_TFTLCD::begin(uint16_t id) {
     setAddrWindow(0, 0, TFTWIDTH-1, TFTHEIGHT-1);
 
   } else if (id == 0x9341) {
-
+	  
+	//ILI9341 adafruit  
+   /*
     uint16_t a, d;
     driver = ID_9341;
     CS_ACTIVE;
@@ -289,13 +317,42 @@ void Adafruit_TFTLCD::begin(uint16_t id) {
     writeRegister16(ILI9341_FRAMECONTROL, 0x001B);
     
     writeRegister8(ILI9341_ENTRYMODE, 0x07);
-    /* writeRegister32(ILI9341_DISPLAYFUNC, 0x0A822700);*/
+    /* writeRegister32(ILI9341_DISPLAYFUNC, 0x0A822700);
 
     writeRegister8(ILI9341_SLEEPOUT, 0);
     delay(150);
     writeRegister8(ILI9341_DISPLAYON, 0);
     delay(500);
+	
+	
     setAddrWindow(0, 0, TFTWIDTH-1, TFTHEIGHT-1);
+	*/
+	
+	// ILI9341 mcufriend
+	driver = ID_9341;
+	CS_ACTIVE;
+	while(i < sizeof(ILI9341_regValues)) {
+		uint8_t r = pgm_read_byte(&ILI9341_regValues[i++]);
+		uint8_t len = pgm_read_byte(&ILI9341_regValues[i++]);
+		if(r == TFTLCD_DELAY) {
+			delay(len);
+			} else {
+			//Serial.print("Register $"); Serial.print(r, HEX);
+			//Serial.print(" datalen "); Serial.println(len);
+
+			CS_ACTIVE;
+			CD_COMMAND;
+			write8(r);
+			CD_DATA;
+			for (uint8_t d=0; d<len; d++) {
+				uint8_t x = pgm_read_byte(&ILI9341_regValues[i++]);
+				write8(x);
+			    }
+			CS_IDLE;
+
+		    }
+	    }
+		
     return;
 
   } else if (id == 0x8357) {
