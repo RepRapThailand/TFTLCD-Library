@@ -61,6 +61,8 @@ void setup(void) {
 
   if(identifier == 0x9325) {
     Serial.println(F("Found ILI9325 LCD driver"));
+  } else if(identifier == 0x9327) {
+    Serial.println(F("Found ILI9327 LCD driver"));
   } else if(identifier == 0x9328) {
     Serial.println(F("Found ILI9328 LCD driver"));
   } else if(identifier == 0x7575) {
