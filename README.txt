@@ -1,9 +1,10 @@
 mcufriend module
-ili9341 
-s6d0154
-ili9327
+ili9341(2.4inch 240x320)
+s6d0154(2.8inch 240x320)
+ili9327(3.6inch 240x400) 
 
-
+Adafruit_TFTLCD.cpp 
+You set a value of #define of TFTHEIGHT and TFTWEIGHT appropriately.
 
 
 
