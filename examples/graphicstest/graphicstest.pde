@@ -73,7 +73,9 @@ void setup(void) {
     Serial.println(F("Found HX8357D LCD driver"));
   } else if(identifier == 0x0154) {
     Serial.println(F("Found S6D0154 LCD driver"));
-  } else {
+  } else if(identifier == 0x9488) {
+    Serial.println(F("Found ILI9488 LCD driver"));
+ } else {
     Serial.print(F("Unknown LCD driver chip: "));
     Serial.println(identifier, HEX);
     Serial.println(F("If using the Adafruit 2.8\" TFT Arduino shield, the line:"));
