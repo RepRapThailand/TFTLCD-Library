@@ -6,7 +6,7 @@ ili9327(3.6inch 240x400)
 ili9488(3.95inch 320x480)
 
 Adafruit_TFTLCD.cpp 
-You set a value of #define of TFTHEIGHT and TFTWEIGHT appropriately.
+You have to set a value of #define of TFTHEIGHT and TFTWEIGHT appropriately.
 
 
 
